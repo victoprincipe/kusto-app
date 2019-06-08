@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import connect from 'react-redux'
+import { Button } from 'react-native-elements';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+class App extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Home Screen</Text>
+        <Button>Next Page</Button>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -17,3 +23,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: App
+  }
+});
+
+export default createAppContainer(AppNavigator);
