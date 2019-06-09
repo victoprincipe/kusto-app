@@ -3,7 +3,6 @@ import { View, Picker } from "react-native"
 import { Input, Text, Button } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
 
-
 const DATE_FORMAT = "YYYY-MM-DD";
 
 const styles = {
@@ -20,7 +19,7 @@ class CardForm extends Component {
             prize: ''
         }
     }
-    
+
     render(){
         const { navigation } = this.props;
         const { params } = this.props.navigation.state;

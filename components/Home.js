@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createStore } from 'redux'
 import connect from 'react-redux'
 import { Button, Image } from 'react-native-elements';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 
 class Home extends Component {

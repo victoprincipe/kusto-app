@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Animated } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
 const styles = {
@@ -30,51 +30,10 @@ class Tasks extends Component {
                     title: 'Passear com o cachorro', 
                     description: 'Passear com o cachorro durante 30 minutos', 
                     prize: 'R$5,00'
-                },
-                {
-                    id: Math.random().toString(36).substr(2, 16),
-                    title: 'Passear com o cachorro', 
-                    description: 'Passear com o cachorro durante 30 minutos', 
-                    prize: 'R$5,00'
-                },
-                {
-                    id: Math.random().toString(36).substr(2, 16),
-                    title: 'Passear com o cachorro', 
-                    description: 'Passear com o cachorro durante 30 minutos', 
-                    prize: 'R$5,00'
-                },
-                {
-                    id: Math.random().toString(36).substr(2, 16),
-                    title: 'Passear com o cachorro', 
-                    description: 'Passear com o cachorro durante 30 minutos', 
-                    prize: 'R$5,00'
-                },
-                {
-                    id: Math.random().toString(36).substr(2, 16),
-                    title: 'Passear com o cachorro', 
-                    description: 'Passear com o cachorro durante 30 minutos', 
-                    prize: 'R$5,00'
-                },
+                }
             ]
         }
     }
-
-    static navigationOptions = ( { navigation } ) => (
-        {
-            title: 'KUSTO',
-            headerStyle: {
-                backgroundColor: '#6b52ae'
-            },
-            headerTintColor: 'white',
-            headerTitleStyle: { 
-                textAlign: 'center', 
-                flex:1 
-            },
-            headerRight: (
-                <View></View>
-            )
-        }
-    )
 
     addNewTask = (title, desc, prize) => {
         newTasks = this.state.tasks
@@ -92,7 +51,7 @@ class Tasks extends Component {
             tasks: newTasks
         })
     }
-    
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -100,7 +59,7 @@ class Tasks extends Component {
                 <ScrollView style={{ padding: 10 }}>
                     {this.state.tasks.map((t) => {
                         return (
-                            <Card key={Math.random().toString(36).substr(2, 16)} title={t.title}>
+                            <Card key={t.id} title={t.title}>
                                 <View style={styles.cardInfo}>
                                     <Text style={styles.cardTitle}>Descrição:</Text>
                                     <Text>{t.description}</Text>
@@ -108,7 +67,10 @@ class Tasks extends Component {
                                     <Text>{t.prize}</Text>
                                     <Button 
                                     title="Recompensar"
-                                    buttonStyle={{ backgroundColor: '#76D93A' }} ></Button>
+                                    buttonStyle={{ backgroundColor: '#76D93A' }} 
+                                    onPress={() => { 
+                                        this.finishTaks(t.id)    
+                                    }}></Button>
                                 </View>
                             </Card>
                         )
