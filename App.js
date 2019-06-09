@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { createStore } from 'redux'
 import connect from 'react-redux'
 import { Button, Image } from 'react-native-elements';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import Tasks from './components/Tasks';
+import CardForm from "./components/Card";
 
 class App extends Component {
   render() {
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
 
 const AppNavigator = createStackNavigator({
   Home: {
-    screen: App
+    screen: Tasks
   }
 });
 
