@@ -1,42 +1,97 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux'
-import connect from 'react-redux'
-import { Button, Image } from 'react-native-elements';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { View } from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from "react-navigation";
+import { Button, Card } from 'react-native-elements';
 import Tasks from './components/Tasks';
-import CardForm from "./components/Card";
+import CardForm from './components/CardForm';
+import ChildrenDashboard from './components/ChildDashboard'
+import Home from './components/Home';
+
+
+const AppNavigator = createSwitchNavigator({
+  HomeScreen: Home,
+  FatherDashboard: {
+    screen: createStackNavigator({
+      Dashboard: {
+        screen: Tasks,
+        navigationOptions: ( { navigation } ) => (
+          {
+              title: 'KUSTO',
+              headerStyle: {
+                  display: 'flex',
+                  backgroundColor: '#6b52ae'
+              },
+              headerTintColor: 'white',
+              headerTitleStyle: { 
+                  textAlign: 'center', 
+                  flex:1 
+              },
+              headerRight: (
+                  <View>
+                      <Button title="SAIR"
+                      onPress={() => navigation.navigate('HomeScreen')}></Button>
+                  </View>
+              )
+          }
+        )
+      },
+      TaskForm: {
+        screen: CardForm,
+      } 
+    })
+  },
+  ChildrenDashboard: {
+    screen: createStackNavigator({
+      Dashboard: {
+        screen: ChildrenDashboard,
+        navigationOptions: ( { navigation } ) => (
+          {
+              title: 'KUSTO',
+              headerStyle: {
+                  display: 'flex',
+                  backgroundColor: '#6b52ae'
+              },
+              headerTintColor: 'white',
+              headerTitleStyle: { 
+                  textAlign: 'center', 
+                  flex:1 
+              },
+              headerRight: (
+                  <View>
+                      <Button title="SAIR"
+                      onPress={() => navigation.navigate('HomeScreen')}></Button>
+                  </View>
+              )
+          }
+        )
+      }
+    })
+  }
+});
+
+const AppContainer = createAppContainer(AppNavigator)
+
+function todos(state = [], action) {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return state.concat([action.text])
+    default:
+      return state
+  }
+}
+
+let appStore = createStore(todos);
 
 class App extends Component {
   render() {
     return (
-      <View style={{
-        flex: 1,
-        flexDirection: 'column',
-      }}>
-        <Image source={require("./assets/kusto.png")} style={{ width: 300, height: 300, alignSelf: 'center' }}></Image>
-        <Button title="Sou Filho"></Button>
-        <Button title="Sou Responsável"></Button>
-
-      </View>
-    );
+      <Provider store={appStore}>
+        <AppContainer/>
+      </Provider>
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: Tasks
-  }
-});
-
-export default createAppContainer(AppNavigator);
+export default App;
